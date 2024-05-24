@@ -7,6 +7,7 @@ const session = require('express-session');
 const User = require('./models/user');
 const userController = require('./controllers/userController');
 const logController = require('./controllers/logController');
+const { isLoggedIn } = require('./middlewares/authMiddleware');
 const Log = require('./models/log');
 
 const app = express();
@@ -46,56 +47,56 @@ const createLog = async (userId, action, message) => {
   }
 };
 
+// // Routes
 
-// Middleware to check if user is logged in
-const isLoggedIn = (req, res, next) => {
-  if (req.session && req.session.userId) {
-    next();
-  } else {
-    res.redirect('/login');
-  }
-};
+// // Serve index.html as the default route
 
-// Routes
+let projectsRoute = require('./routers/routes')
 
-// Serve index.html as the default route
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/index.html'));
-});
+app.use('/', projectsRoute);
 
-// Route to handle updating the password
-app.post('/profile/update-password', isLoggedIn, async (req, res) => {
-  const { currentPassword, newPassword } = req.body;
-  const userId = req.session.userId;
+// app.get('/', (req, res) => {
+//   res.sendFile(path.join(__dirname, '/index.html'));
+// });
 
-  try {
-    const user = await User.findById(userId);
-    if (!user || user.password !== currentPassword) {
-      return res.redirect('/profile?passwordUpdateStatus=error');
-    }
-    user.password = newPassword;
-    await user.save();
-    await createLog(userId.toString(), "Update Password", "Password update successful.")
-    res.redirect('/profile?passwordUpdateStatus=success');
-  } catch (error) {
-    console.error('Error updating password:', error);
-    res.redirect('/profile?passwordUpdateStatus=error');
-  }
-});
+// // Route to handle updating the password
+// app.post('/profile/update-password', isLoggedIn, async (req, res) => {
+//   const { currentPassword, newPassword } = req.body;
+//   const userId = req.session.userId;
 
-// Serve profile.html as the profile route
-app.get('/profile', (req, res) => {
-  res.sendFile(path.join(__dirname, '/profile.html'));
-});
+//   try {
+//     const user = await User.findById(userId);
+//     if (!user || user.password !== currentPassword) {
+//       return res.redirect('/profile?passwordUpdateStatus=error');
+//     }
+//     user.password = newPassword;
+//     await user.save();
+//     await createLog(userId.toString(), "Update Password", "Password update successful.")
+//     res.redirect('/profile?passwordUpdateStatus=success');
+//   } catch (error) {
+//     console.error('Error updating password:', error);
+//     res.redirect('/profile?passwordUpdateStatus=error');
+//   }
+// });
 
-// Your route handlers
-app.post('/login', userController.loginUser);
-app.post('/register', userController.registerUser);
-app.get('/logout', userController.logoutUser);
-app.put('/profile/:id', isLoggedIn, userController.updateProfile);
-app.get('/logs', logController.getLogs);
-app.post('/logs', logController.addLog);
-app.delete('/logs/:id', logController.deleteLog);
+// // Serve profile.html as the profile route
+// app.get('/profile', (req, res) => {
+//   res.sendFile(path.join(__dirname, '/profile.html'));
+// });
+
+
+
+// // Your route handlers
+// app.get('/profile', (req, res) => {
+//   res.sendFile(path.join(__dirname, '/profile.html'));
+// });
+// app.post('/login', userController.loginUser);
+// app.post('/register', userController.registerUser);
+// app.get('/logout', userController.logoutUser);
+// app.put('/profile/:id', isLoggedIn, userController.updateProfile);
+// app.get('/logs', logController.getLogs);
+// app.post('/logs', logController.addLog);
+// app.delete('/logs/:id', logController.deleteLog);
 
 // Start server
 app.listen(PORT, () => {
