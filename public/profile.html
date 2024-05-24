@@ -5,38 +5,176 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
-    <link rel="stylesheet" href="/styles/profile.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ecf0f1;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #32394E;
+            color: #FFE8A3;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .sidebar img {
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .sidebar h2 {
+            color: #FFE8A3;
+            margin: 10px 0;
+        }
+
+        .sidebar nav {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .sidebar nav a {
+            color: #ffffff;
+            text-decoration: none;
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #32394E;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .sidebar nav a:hover {
+            background-color: #ffffff;
+            color: #32394E;
+
+        }
+
+        .sidebar button {
+            background-color: #FFE8A3;
+            color: #32394E;
+            border: none;
+            padding: 10px;
+            margin: 10px 0;
+            width: 100%;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .sidebar button:hover {
+            background-color: #FFE8A3;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .main-content h1 {
+            color: #32394E;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #32394E;
+        }
+
+        input[type="password"],
+        button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #32394E;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #32394E;
+            color: #FFE8A3;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            width: 100%;
+            padding: 10px;
+        }
+
+        button:hover {
+            background-color: #32394E;
+        }
+
+        .success-message {
+            color: #2ecc71;
+        }
+
+        .error-message {
+            color: #e74c3c;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>User Profile</h1>
-        <div class="profile-info">
-            <p><strong>Name:</strong> John Doe</p>
-            <p><strong>Email:</strong> john@example.com</p>
-            <!-- Add more profile information here -->
+        <div class="sidebar">
+            <img src="https://team.d4interactive.io/files/k8xymjq8itykxq8eizauy3w8xe/public?h=XtHmhWiR7QBzJHmriWM1fywjIMXaFY6U5vwjlFvuYCA" alt="User" width="150" height="150">
+            <h2>Employee's Name</h2>
+            <nav>
+                <a href="#">Dashboard</a>
+                <a href="#">Name</a>
+                <a href="#">Password</a>
+                <a href="#">ID Number</a>
+                <a href="#">Gender</a>
+            </nav>
+            <button onclick="window.location.href='/logout'">Sign Out</button>
+            <button onclick="window.location.href='/account-settings'">Account Settings</button>
         </div>
-        <a href="/logout">Logout</a>
-    </div>
-    <!-- Profile Page (profile.html) -->
-    <form action="/profile/update-password" method="POST">
-        <label for="currentPassword">Current Password:</label>
-        <input type="password" id="currentPassword" name="currentPassword" required><br><br>
-        <label for="newPassword">New Password:</label>
-        <input type="password" id="newPassword" name="newPassword" required><br><br>
-        <button type="submit">Update Password</button>
-    </form>
-    <div id="passwordUpdateMessage"></div>
+        <div class="main-content">
+            <h1>User Activity Logs Page</h1>
+            <div class="profile-info">
+                <p><strong>Name:</strong> John Doe</p>
+                <p><strong>Email:</strong> john@example.com</p>
+                <!-- Add more profile information here -->
+            </div>
+            
+            <!-- Profile Page (profile.html) -->
+            <form action="/profile/update-password" method="POST">
+                <label for="currentPassword">Current Password:</label>
+                <input type="password" id="currentPassword" name="currentPassword" required><br><br>
+                <label for="newPassword">New Password:</label>
+                <input type="password" id="newPassword" name="newPassword" required><br><br>
+                <button type="submit">Update Password</button>
+            </form>
+            <div id="passwordUpdateMessage"></div>
 
-    <!-- Update Profile Form -->
-    <h2></h2>
-    <div id="updateProfileForm" style="display: none;">
-        <!-- Form fields for updating profile will be dynamically rendered here -->
-        <form id="profileForm">
-            <!-- You can include input fields for updating profile information here -->
-            <button type="button" onclick="updateProfile()">Update Profile</button>
-        </form>
+            <!-- Update Profile Form -->
+            <div id="updateProfileForm">
+                <!-- Form fields for updating profile will be dynamically rendered here -->
+                <form id="profileForm">
+                    <!-- You can include input fields for updating profile information here -->
+                    <button type="button" onclick="updateProfile()">Update Profile</button>
+                </form>
+            </div>
+        </div>
     </div>
+
     <script>
         // Function to parse query parameters from URL
         function getQueryParam(param) {
@@ -55,33 +193,31 @@
         } else if (passwordUpdateStatus === 'error') {
             messageContainer.innerHTML = '<p class="error-message">Failed to update password. Please try again.</p>';
         }
-    </script>
-    <script>
-        // Update profile function
-function updateProfile() {
-  const username = document.getElementById('profileUsername').value; // Assuming you have an input field with id 'profileUsername' for updating username
-  const password = document.getElementById('profilePassword').value; // Assuming you have an input field with id 'profilePassword' for updating password
-  fetch('/profile/:id', { // Assuming you're sending the user ID as a parameter in the URL
-      method: 'PUT',
-      headers: {
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ username, password })
-  })
-  .then(response => {
-      if (response.ok) {
-          alert('Profile updated successfully!');
-          // Optionally, redirect the user to their profile page or refresh the page to reflect the changes
-          window.location.reload(); // Reload the page to reflect the changes
-      } else {
-          alert('Failed to update profile. Please try again.');
-      }
-  })
-  .catch(error => {
-      console.error('Error:', error);
-  });
-}
 
+        // Update profile function
+        function updateProfile() {
+            const username = document.getElementById('profileUsername').value; // Assuming you have an input field with id 'profileUsername' for updating username
+            const password = document.getElementById('profilePassword').value; // Assuming you have an input field with id 'profilePassword' for updating password
+            fetch('/profile/:id', { // Assuming you're sending the user ID as a parameter in the URL
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Profile updated successfully!');
+                    // Optionally, redirect the user to their profile page or refresh the page to reflect the changes
+                    window.location.reload(); // Reload the page to reflect the changes
+                } else {
+                    alert('Failed to update profile. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
     </script>
 </body>
 
