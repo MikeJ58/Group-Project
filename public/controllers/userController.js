@@ -56,6 +56,26 @@ exports.updateProfile = async (req, res) => {
     }
 };
 
+exports.deleteUser = async (req, res) => {
+    const { username } = req.body;
+    try {
+        // Check if the user exists
+        const existingUser = await User.findOne({ username });
+        if (!existingUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+        
+        // Delete the user
+        await User.deleteOne({ username });
+        
+        res.status(200).json({ message: 'User deleted successfully' });
+        addLog(username, "successfully deleted user.");
+    } catch (error) {
+        console.error('Error deleting user:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
+
 exports.logoutUser = async (req, res) => {
     req.session.destroy((err) => {
         if (err) {
