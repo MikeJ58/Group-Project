@@ -43,6 +43,7 @@ router.post('/login', userController.loginUser);
 router.post('/register', userController.registerUser);
 router.get('/logout', userController.logoutUser);
 router.put('/profile/:id', isLoggedIn, userController.updateProfile);
+router.delete('/delete-user', userController.deleteUser);
 router.get('/logs', logController.getLogs);
 router.post('/logs', logController.addLog);
 router.delete('/logs/:id', logController.deleteLog);

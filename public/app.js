@@ -28,6 +28,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Use routes
 app.use('/', projectsRoute);
 
+//defining exports
+module.exports = app;
+
 // Start server
 app.listen(PORT, () => {
   console.log(`Server is running on http://127.0.0.1:${PORT}`);
