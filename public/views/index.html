@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account Management System</title>
-    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
 
 <body>
@@ -23,6 +23,7 @@
             <button type="button" onclick="login()">Login</button>
             <button type="button" onclick="showForgotPasswordForm()">Forgot Password</button>
         </form>
+        <button onclick="window.location.href='/signup'">Signup</button>
 
         <!-- Forgot Password Form (Initially Hidden) -->
         <div id="forgotPasswordForm" style="display: none;">
@@ -42,7 +43,7 @@
         <h2>User Activity Logs</h2>
         <ul id="logsList"></ul>
     </div>
-    <script src="scripts.js"></script>
+    <script src="scripts/scripts.js"></script>
 </body>
 
 </html>

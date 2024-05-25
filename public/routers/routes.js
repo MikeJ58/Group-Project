@@ -9,7 +9,7 @@ const User = require('../models/user');
 
 // Serve index.html as the default route
 router.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../index.html'));
+  res.sendFile(path.join(__dirname, '../views/index.html'));
 });
 
 // Route to handle updating the password
@@ -35,7 +35,11 @@ router.post('/profile/update-password', isLoggedIn, async (req, res) => {
 
 // Serve profile.html as the profile route
 router.get('/profile', (req, res) => {
-  res.sendFile(path.join(__dirname, '../profile.html'));
+  res.sendFile(path.join(__dirname, '../views/profile.html'));
+});
+
+router.get('/signup', (req, res) => {
+  res.sendFile(path.join(__dirname, '../views/signup.html'));
 });
 
 // Your route handlers
