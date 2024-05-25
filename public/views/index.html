@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Management System</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+</head>
+
+<body>
+    <div style="display: flex; width: 600px; margin: auto;">
+        <img class="headerLogo" src="https://team.d4interactive.io/files/chcdwpfeitfs5n5a61ofhoro7r/public?h=BjX7S-WP-1GAhuItxXcdUkeIE5zNwFOOnCNVh_tTUnk" height="150" width="150" alt="Logo" />
+        <h1 style="color: #ffffff;">Account Management System</h1>
+    </div>
+    <div class="container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="loginUsername">Username:</label>
+            <input type="text" id="loginUsername" name="loginUsername" required>
+            <label for="loginPassword">Password:</label>
+            <input type="password" id="loginPassword" name="loginPassword" required>
+            <button type="button" onclick="login()">Login</button>
+            <button type="button" onclick="showForgotPasswordForm()">Forgot Password</button>
+        </form>
+
+        <!-- Forgot Password Form (Initially Hidden) -->
+        <div id="forgotPasswordForm" style="display: none;">
+            <h2>Forgot Password</h2>
+            <form id="resetPasswordForm">
+                <label for="currentPassword">Current Password:</label>
+                <input type="password" id="currentPassword" name="currentPassword" required>
+                <label for="newPassword">New Password:</label>
+                <input type="password" id="newPassword" name="newPassword" required>
+                <label for="confirmNewPassword">Confirm New Password:</label>
+                <input type="password" id="confirmNewPassword" name="confirmNewPassword" required>
+                <button type="button" onclick="resetPassword()">Change Password</button>
+            </form>
+            <div id="updatePasswordMessage"></div>
+        </div>
+
+        <h2>User Activity Logs</h2>
+        <ul id="logsList"></ul>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+
+</html>
