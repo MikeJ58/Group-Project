@@ -151,10 +151,34 @@
         .error-message {
             color: red;
         }
+
+        .headerLogo {
+            display: flex;
+            margin: auto;
+            border-radius: 50%;
+        }
+
+        .headerContainer {
+            display: flex;
+            width: 600px;
+            margin: auto;
+            align-items: center;
+            background-color: #002366; /* Dark blue color */
+            padding: 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 
 <body>
+    <header>
+        <div class = "headerContainer">
+            <img class="headerLogo"
+                src="https://team.d4interactive.io/files/chcdwpfeitfs5n5a61ofhoro7r/public?h=BjX7S-WP-1GAhuItxXcdUkeIE5zNwFOOnCNVh_tTUnk"
+                height="150" width="150" alt="Logo" />
+            <h1 style="color: #ffffff;">Account Management System</h1>
+        </div>
+    </header>
     <div class="container">
         <div class="form-section">
             <h2>Login</h2>
@@ -231,17 +255,17 @@
                     password: password
                 }),
             })
-            .then(response => {
-                if (response.ok) {
-                    alert("Registration successful!");
-                } else {
-                    alert("Registration failed. Please try again.");
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("An error occurred while registering. Please try again later.");
-            });
+                .then(response => {
+                    if (response.ok) {
+                        alert("Registration successful!");
+                    } else {
+                        alert("Registration failed. Please try again.");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("An error occurred while registering. Please try again later.");
+                });
         }
 
         // Login function
@@ -256,17 +280,17 @@
                 },
                 body: JSON.stringify({ username, password })
             })
-            .then(response => {
-                if (response.ok) {
-                    alert('Login successful!');
-                    window.location.href = '/profile';
-                } else {
-                    alert('Login failed. Please check your credentials.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+                .then(response => {
+                    if (response.ok) {
+                        alert('Login successful!');
+                        window.location.href = '/profile';
+                    } else {
+                        alert('Login failed. Please check your credentials.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
 
         // Function to show the Forgot Password form
@@ -292,37 +316,38 @@
                 },
                 body: JSON.stringify({ currentPassword, newPassword })
             })
-            .then(response => {
-                if (response.ok) {
-                    document.getElementById('updatePasswordMessage').innerHTML = '<p class="success-message">Password updated successfully!</p>';
-                } else {
-                    document.getElementById('updatePasswordMessage').innerHTML = '<p class="error-message">Failed to update password. Please try again.</p>';
-                }
-            })
-            .catch(error => {
-                console.error('Error updating password:', error);
-                document.getElementById('updatePasswordMessage').innerHTML = '<p class="error-message">An error occurred. Please try again later.</p>';
-            });
+                .then(response => {
+                    if (response.ok) {
+                        document.getElementById('updatePasswordMessage').innerHTML = '<p class="success-message">Password updated successfully!</p>';
+                    } else {
+                        document.getElementById('updatePasswordMessage').innerHTML = '<p class="error-message">Failed to update password. Please try again.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating password:', error);
+                    document.getElementById('updatePasswordMessage').innerHTML = '<p class="error-message">An error occurred. Please try again later.</p>';
+                });
         }
 
         // Function to fetch logs from the server and display them
         function fetchAndDisplayLogs() {
             fetch('/logs')
-            .then(response => response.json())
-            .then(logs => {
-                const logsList = document.getElementById('logsList');
-                logsList.innerHTML = '';
-                logs.forEach(log => {
-                    const listItem = document.createElement('li');
-                    listItem.textContent = log.message;
-                    logsList.appendChild(listItem);
-                });
-            })
-            .catch(error => console.error('Error fetching logs:', error));
+                .then(response => response.json())
+                .then(logs => {
+                    const logsList = document.getElementById('logsList');
+                    logsList.innerHTML = '';
+                    logs.forEach(log => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = log.message;
+                        logsList.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Error fetching logs:', error));
         }
 
         // Fetch and display logs when the page loads
         document.addEventListener('DOMContentLoaded', fetchAndDisplayLogs);
     </script>
 </body>
+
 </html>
